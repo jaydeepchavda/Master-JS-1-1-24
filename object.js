@@ -232,3 +232,207 @@ let codes = {
 
 
 //   -------     END      -------- 
+
+/* 
+example
+We have an object storing salaries of our team:
+
+
+Write the code to sum all salaries and store in the variable sum. Should be 390 in the example above.
+
+If salaries is empty, then the result must be 0.
+
+
+*/
+let salaries = {
+    John: 100,
+    Ann: 160,
+    Pete: 130
+  }
+
+  let sum = 0;
+
+  for(let key in salaries){
+    sum += salaries[key];
+  }
+  console.log(sum)
+
+
+//   example 2
+//   Create a function multiplyNumeric(obj) that multiplies all numeric property values of obj by 2.
+let menu = {
+    width: 200,
+    height: 300,
+    title: "My menu"
+  };
+  
+// solution
+  function multiplyNumeric(obj){
+    for(let key in obj){
+        if(typeof obj[key] == 'number'){
+            obj[key] *= 2;
+        }
+    }
+  }
+  multiplyNumeric(menu);
+  console.log(menu);
+
+
+
+//   topic 2
+// Object references and copying
+
+/* 
+One of the fundamental differences of objects versus primitives is that objects are stored and copied
+ “by reference”, whereas primitive values: strings, numbers, booleans, etc – are always copied “as a whole value”.
+*/
+
+
+let message = "Hello!";
+let phrase = message;
+
+// As a result we have two independent variables, each one storing the string "Hello!".
+/* 
+A variable assigned to an object stores not the object itself, but its “address in memory” –
+ in other words “a reference” to it.
+
+ */
+
+
+ let userId = {
+    name: "John"
+  };
+
+  /* 
+  The object is stored somewhere in memory (at the right of the picture), 
+  while the user variable (at the left) has a “reference” to it.
+  */
+
+
+let userFive = { name: 'John' };
+
+let admin = userFive;
+
+admin.name = 'Pete'; // changed by the "admin" reference
+
+console.log(userFive.name); // 'Pete', changes are seen from the "user" reference
+
+
+// Cloning and merging, Object.assign
+let userS = {
+    name: "John",
+    age: 30
+  };
+  
+  let clone = {}; // the new empty object
+  
+  // let's copy all user properties into it
+  for (let key in userS) {
+    clone[key] = userS[key];
+  }
+  
+  // now clone is a fully independent object with the same content
+  clone.name = "Pete"; // changed the data in it
+  
+  console.log("cloning example result " +userS.name ); // still John in the original object
+
+
+//   We can also use the method Object.assign.
+
+
+/* 
+Object.assign(dest, ...sources)
+The first argument dest is a target object.
+Further arguments is a list of source objects.
+
+
+It copies the properties of all source objects into the target dest, and then returns it as the result.
+
+*/
+
+let userSe = { name: "John" };
+
+let permission1 = {canView: true};
+let permission2 = {canEdit: true};
+
+Object.assign(userSe, permission1 , permission2);
+
+console.log(userSe);
+
+// If the copied property name already exists, it gets overwritten:
+
+
+Object.assign(userSe, { name: "Pete" });
+
+console.log(userSe.name); // now userSe = { name: "Pete" }
+
+// We also can use Object.assign to perform a simple object cloning:
+
+let cloneSe = Object.assign({}, userSe);
+
+console.log( cloneSe);
+
+// Nested cloning
+// Until now we assumed that all properties of user are primitive. But properties can be references to other objects.
+
+// Like this:
+
+let userE = {
+  name: "John",
+  sizes: {
+    height: 182,
+    width: 50
+  }
+};
+
+console.log( userE.sizes.height ); // 182
+
+
+let userN = {
+    name: "John",
+    sizes: {
+      height: 182,
+      width: 50
+    }
+  };
+  
+  let cloneN = Object.assign({}, userN);
+  
+  console.log( userN.sizes === cloneN.sizes ); // true, same object
+  
+  // userN and cloneN share sizes
+  userN.sizes.width = 60;    // change a property from one place
+  console.log(cloneN.sizes.width); // 60, get the result from the other one
+
+
+//   structuredClone 
+
+/* 
+It deep cloning that copy data and not reference of the object data in memory
+The structuredClone method can clone most data types, such as objects, arrays, primitive values.
+
+It also supports circular references, when an object property references the object itself 
+(directly or via a chain or references).
+
+// error
+structuredClone({
+  f: function() {}
+});
+Function properties aren’t supported.
+
+let user = {
+  name: "John",
+  sizes: {
+    height: 182,
+    width: 50
+  }
+};
+
+let clone = structuredClone(user);
+
+alert( user.sizes === clone.sizes ); // false, different objects
+
+// user and clone are totally unrelated now
+user.sizes.width = 60;    // change a property from one place
+alert(clone.sizes.width); // 50, not related
+*/
