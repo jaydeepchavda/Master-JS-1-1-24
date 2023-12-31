@@ -180,4 +180,6 @@ So we can “covertly” hide something into objects that we need, but others sh
 There are many system symbols used by JavaScript which are accessible as Symbol.*. We can use them to alter 
 some built-in behaviors. For instance, later in the tutorial we’ll use Symbol.iterator for iterables, Symbol.toPrimitive 
 to setup object-to-primitive conversion and so on.
+
+
 */
