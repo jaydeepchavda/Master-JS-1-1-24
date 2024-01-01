@@ -313,3 +313,111 @@ Iteration over Map and Set is always in the insertion order, so we can’t say t
 but we can’t reorder elements or directly get an element by its number.
 
 */
+
+
+// WeakMap and WeakSet
+/* 
+WeakMap
+The first difference between Map and WeakMap is that keys must be objects, not primitive values:
+
+let weakMap = new WeakMap();
+
+let obj = {};
+
+weakMap.set(obj, "ok"); // works fine (object key)
+
+// can't use a string as the key
+weakMap.set("test", "Whoops"); // Error, because "test" is not an object
+*/
+
+let johnn1 = { name: "John" };
+
+let weakMap = new WeakMap();
+weakMap.set(johnn1, "...");
+
+johnn1 = null; // overwrite the reference
+
+// john is removed from memory!
+
+/* 
+Compare it with the regular Map example above. 
+Now if john only exists as the key of WeakMap – it will be automatically deleted from the map (and memory).
+
+WeakMap does not support iteration and methods keys(), values(), entries(), 
+so there’s no way to get all keys or values from it.
+
+WeakMap has only the following methods:
+
+weakMap.set(key, value)
+weakMap.get(key)
+weakMap.delete(key)
+weakMap.has(key)
+*/
+
+weakMap.set(john, "secret documents");
+// if john dies, secret documents will be destroyed automatically
+
+/* 
+
+Use case: additional data
+The main area of application for WeakMap is an additional data storage.
+
+If we’re working with an object that “belongs” to another code, maybe even a third-party library, 
+and would like to store some data associated with it,
+ that should only exist while the object is alive – then WeakMap is exactly what’s needed.
+
+ Use case: caching
+Another common example is caching. We can store (“cache”) results from a function, 
+so that future calls on the same object can reuse it.
+ */
+
+
+//  -------weakSet
+
+
+/* 
+WeakSet
+WeakSet behaves similarly:
+
+It is analogous to Set, but we may only add objects to WeakSet (not primitives).
+An object exists in the set while it is reachable from somewhere else.
+Like Set, it supports add, has and delete, but not size, keys() and no iterations.
+*/
+
+let visitedSet = new WeakSet();
+
+let johnn = { name: "Johnn" };
+let petee = { name: "Petee" };
+let maryy = { name: "Maryy" };
+
+visitedSet.add(johnn); // John visited us
+visitedSet.add(petee); // Then Pete
+visitedSet.add(johnn); // John again
+
+// visitedSet has 2 users now
+
+// check if John visited?
+// alert(visitedSet.has(john)); // true
+
+// check if Mary visited?
+// alert(visitedSet.has(mary)); // false
+
+john = null;
+
+// visitedSet will be cleaned automatically
+
+/* 
+Summary
+WeakMap is Map-like collection that allows only objects as keys and removes them together 
+with associated value once they become inaccessible by other means.
+
+WeakSet is Set-like collection that stores only objects and removes them once they become inaccessible by other means.
+
+Their main advantages are that they have weak reference to objects, so they can easily be removed by garbage collector.
+
+That comes at the cost of not having support for clear, size, keys, values…
+
+WeakMap and WeakSet are used as “secondary” data structures in addition to the “primary” object storage.
+ Once the object is removed from the primary storage, if it is only found as the key of WeakMap or in a WeakSet,
+ it will be cleaned up automatically.
+*/
