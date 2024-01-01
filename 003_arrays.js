@@ -17,6 +17,9 @@ There exists a special data structure named Array, to store ordered collections.
 let arr = [];
 
 let arrTwo = new Array();
+let arrTr  = new array["jaydip" , "vipul"];
+
+console.log(arrTr);
 
 
 let fruits = ["Apple", "Orange", "Plum"];
