@@ -491,3 +491,19 @@ let counter = makeCounter();
 
 A variable is updated in the Lexical Environment where it lives.
 */
+
+/* 
+Closure
+There is a general programming term “closure”, that developers generally should know.
+
+A closure is a function that remembers its outer variables and can access them. In some languages, that’s not possible, 
+or a function should be written in a special way to make it happen. But as explained above, in JavaScript, 
+all functions are naturally closures (there is only one exception, to be covered in The "new Function" syntax).
+
+That is: they automatically remember where they were created using a hidden [[Environment]] property, 
+and then their code can access outer variables.
+
+When on an interview, a frontend developer gets a question about “what’s a closure?”, a valid answer would be
+ a definition of the closure and an explanation that all functions in JavaScript are closures, and maybe a few
+  more words about technical details: the [[Environment]] property and how Lexical Environments work.
+*/
