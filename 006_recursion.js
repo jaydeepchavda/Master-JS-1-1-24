@@ -369,9 +369,9 @@ That’s because there are no references to it. As any JavaScript object, it’s
 
 
   //syntax error because of parentheses below
-function go() {
+// function go() {
 
-}(); // <-- can't call Function Declaration immediately
+// }(); // <-- can't call Function Declaration immediately
 
 
 
@@ -394,6 +394,41 @@ function go() {
   }();
 
 
-  Global object
-The global object provides variables and functions that are available anywhere.
- By default, those that are built into the language or the environment.
+//   Global object
+// The global object provides variables and functions that are available anywhere.
+//  By default, those that are built into the language or the environment.
+
+
+// alert("Hello");
+// is the same as
+// window.alert("Hello");
+
+var gVar = 5;
+
+console.log(globalThis.gVar); // 5 (became a property of the global object)
+
+
+// n a browser it is named window, for Node.js it is global, for other environments it may have another name.
+
+// Recently, globalThis was added to the language, as a standardized name for a global object, 
+// that should be supported across all environments. It’s supported in all major browsers.
+
+/* 
+
+Summary
+The global object holds variables that should be available everywhere.
+
+That includes JavaScript built-ins, such as Array and environment-specific values,
+ such as window.innerHeight – the window height in the browser.
+
+The global object has a universal name globalThis.
+
+…But more often is referred by “old-school” environment-specific names, such as window (browser) and global (Node.js).
+
+We should store values in the global object only if they’re truly global for our project. And keep their number at minimum.
+
+In-browser, unless we’re using modules, global functions and variables declared with var become a property of the global 
+object.
+
+To make our code future-proof and easier to understand, we should access properties of the global object directly, 
+as window.x.*/
