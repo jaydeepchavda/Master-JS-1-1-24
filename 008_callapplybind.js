@@ -159,3 +159,74 @@ Partials are convenient when we don’t want to repeat the same argument over an
 Like if we have a send(from, to) function, and from should always be the same for our task,
  we can get a partial and go on with it.
 */
+
+//   -------------------------         Arrow functions revisited           -----------------
+
+
+/* 
+Arrow functions are not just a “shorthand” for writing small stuff. They have some very specific and useful features.
+
+JavaScript is full of situations where we need to write a small function that’s executed somewhere else.
+
+For instance:
+
+arr.forEach(func) – func is executed by forEach for every array item.
+setTimeout(func) – func is executed by the built-in scheduler.
+…there are more. */
+
+
+// Arrow functions have no “this”
+
+let group = {
+    title: "Our Group",
+    students: ["John", "Pete", "Alice"],
+  
+    showList() {
+      this.students.forEach(
+        student => alert(this.title + ': ' + student)
+      );
+    }
+  };
+  
+  group.showList();
+//   Here in forEach, the arrow function is used,
+//    so this.title in it is exactly the same as in the outer method showList. That is: group.title.
+
+
+// Arrows have no “arguments”
+
+function defer(f, ms) {
+    return function() {
+      setTimeout(() => f.apply(this, arguments), ms);
+    };
+  }
+  
+  function sayHi(who) {
+    console.log('Hello, ' + who);
+  }
+  
+  let sayHiDeferred = defer(sayHi, 2000);
+  sayHiDeferred("John"); // Hello, John after 2 seconds
+
+
+//   The same without an arrow function would look like:
+  
+  function defer(f, ms) {
+    return function(...args) {
+      let ctx = this;
+      setTimeout(function() {
+        return f.apply(ctx, args);
+      }, ms);
+    };
+  }
+//   Here we had to create additional variables args and ctx so that the function inside setTimeout could take them.
+
+/* 
+Summary
+Arrow functions:
+
+Do not have this
+Do not have arguments
+Can’t be called with new
+They also don’t have super, but we didn’t study it yet. We will on the chapter Class inheritance
+*/
