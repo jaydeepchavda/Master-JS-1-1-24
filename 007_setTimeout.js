@@ -93,3 +93,19 @@ The CPU is overloaded.
 The browser tab is in the background mode.
 The laptop is on battery saving mode.
 */
+
+
+
+
+// ------------------      The "new Function" syntax
+// There’s one more way to create a function. It’s rarely used, but sometimes there’s no alternative.
+
+// Syntax 
+// The syntax for creating a function:
+
+// let func = new Function ([arg1, arg2, ...argN], functionBody);
+
+
+let sum = new Function('a', 'b', 'return a + b');
+
+console.log( sum(1, 2) ); // 3
